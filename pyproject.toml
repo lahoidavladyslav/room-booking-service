@@ -1,0 +1,15 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+per-file-ignores = {"main.py" = ["E501"]}
+ignore = ["B008", "B904"]  # FastAPI Depends()/Query() in defaults
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+testpaths = ["."]
+filterwarnings = ["ignore::DeprecationWarning"]
