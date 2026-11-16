@@ -5,6 +5,7 @@ FastAPI + PostgreSQL. Auth is simplified: send `X-User-Id: <any string>` (missin
 ## Run
 ```bash
 docker compose up --build        # app on :8000, Swagger on http://localhost:8000/docs
+# port busy? APP_PORT=8001 DB_PORT=5433 docker compose up --build
 ```
 Without Docker: start Postgres, `pip install -r requirements.txt`, then
 ```bash
