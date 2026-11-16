@@ -11,9 +11,6 @@
 6. **Availability** — pure `free_intervals` over Kyiv working window, gaps only (auto-glued).
 7. **Tests** — unit (time rules, DST, weekend-by-Kyiv-date), integration on real DB, 16-way race test.
 8. **Extras** — A weekly repeat (all-or-nothing, savepoint per slot, conflict dates),
-   B stats in SQL, C Idempotency-Key (claim row in same tx), E Swagger `/docs`,
+   B stats in SQL, C Idempotency-Key (claim row in same tx), D React UI (`frontend/`), E Swagger `/docs`,
    F GitHub Actions, G `/new-endpoint` command + ruff hook.
 9. **Docs** — README, AI_LOG.
-
-## Not done
-- D: React UI.

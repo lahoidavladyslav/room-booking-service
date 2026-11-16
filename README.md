@@ -15,6 +15,15 @@ uvicorn main:app --reload
 Migrations (`migrations/*.sql`) also run automatically on app start.
 In compose: `docker compose exec app python main.py seed`.
 
+## UI (extra D)
+React + Vite in `frontend/`: pick room and date, see the day grid (15-min cells, free / busy / mine),
+click a free cell to book (start, duration up to 4h, title), cancel your own bookings.
+```bash
+cd frontend && npm install
+API_URL=http://localhost:8000 npm run dev   # http://localhost:5173, /api proxied to the backend
+```
+Set the user in the top bar (sent as `X-User-Id`). Times are shown/sent in Europe/Kyiv.
+
 ## Tests
 ```bash
 pip install -r requirements-dev.txt
@@ -50,10 +59,9 @@ curl $H -X DELETE localhost:8000/bookings/1
 - Layout is intentionally a single `main.py` + `migrations/`.
 
 ## Extras done
-A (weekly repeat), B (stats, computed in SQL), C (Idempotency-Key), E (Swagger `/docs`),
+A (weekly repeat), D (React UI), B (stats, computed in SQL), C (Idempotency-Key), E (Swagger `/docs`),
 F (GitHub Actions CI), G (`.claude/commands/new-endpoint.md` + ruff hook in `.claude/settings.json`:
 keeps style consistent automatically after each AI edit and gives the model immediate lint feedback).
 
 ## Not done
-- D: React UI (time).
 - Alembic: plain SQL migrations with a tiny runner instead (no ORM in the project).

@@ -8,6 +8,7 @@ pytest, ruff.
 - `main.py` — app: error handling, business rules (pure functions), routes, migration runner, seed.
 - `migrations/NNNN_name.sql` — schema, applied in order by `migrate()`; tracked in `schema_migrations`.
 - `test_main.py` — unit tests (pure functions) + integration tests on a real Postgres.
+- `frontend/` — React + Vite UI (`npm run dev`, proxies `/api` to the backend; Kyiv time helpers in `src/time.js`).
 - `docs/PLAN.md` — implementation plan. `AI_LOG.md` — log of working with AI.
 
 ## Commands
