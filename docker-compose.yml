@@ -13,7 +13,7 @@ services:
     build: .
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/booking
-    ports: ["${APP_PORT:-8001}:8000"]
+    ports: ["${APP_PORT:-18080}:8000"]
     depends_on:
       db:
         condition: service_healthy
