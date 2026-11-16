@@ -1,0 +1,26 @@
+:root { font-family: system-ui, sans-serif; color: #1c2430; }
+body { margin: 0; background: #f4f6f9; }
+main { max-width: 980px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 1.5rem; }
+.toolbar { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+label { display: flex; flex-direction: column; gap: 4px; font-size: .8rem; color: #566; }
+input, select { padding: 6px 8px; font-size: 1rem; border: 1px solid #c5ccd6; border-radius: 6px; background: #fff; }
+.layout { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+.grid { flex: 1 1 480px; background: #fff; border: 1px solid #dde2ea; border-radius: 8px; overflow: hidden; }
+.row { display: flex; align-items: stretch; height: 22px; border-top: 1px dotted #e6eaf0; }
+.row.hour { border-top: 1px solid #cfd6e0; }
+.time { width: 52px; font-size: .75rem; color: #788; padding: 3px 8px; box-sizing: border-box; }
+.cell { flex: 1; padding: 2px 8px; font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.free-btn { border: 0; background: #e9f7ee; cursor: pointer; }
+.free-btn:hover { background: #bfe8cc; }
+.busy .cell { background: #f7d9d9; }
+.mine .cell { background: #d9e6f9; }
+.link { margin-left: 8px; border: 0; background: none; color: #b33; cursor: pointer; text-decoration: underline; font-size: .75rem; }
+.panel { flex: 0 0 260px; display: flex; flex-direction: column; gap: 10px; background: #fff; border: 1px solid #dde2ea; border-radius: 8px; padding: 16px; position: sticky; top: 16px; }
+.panel h2 { margin: 0; font-size: 1.1rem; }
+.actions { display: flex; gap: 8px; }
+button { padding: 8px 12px; border: 0; border-radius: 6px; background: #2f6fed; color: #fff; font-size: .9rem; cursor: pointer; }
+button:disabled { opacity: .5; cursor: default; }
+button.secondary { background: #e3e7ee; color: #223; }
+.error { background: #fde8e8; color: #8a1f1f; padding: 8px 12px; border-radius: 6px; margin-bottom: 12px; }
+.muted { color: #788; font-size: .85rem; margin: 0; }
