@@ -4,14 +4,14 @@ FastAPI + PostgreSQL. Auth is simplified: send `X-User-Id: <any string>` (missin
 
 ## Run
 ```bash
-docker compose up --build        # app on :8000, Swagger on http://localhost:8000/docs
-# port busy? APP_PORT=8001 DB_PORT=5433 docker compose up --build
+docker compose up --build        # app on :8001, Swagger on http://localhost:8001/docs
+# port busy? APP_PORT=8002 DB_PORT=5433 docker compose up --build
 ```
 Without Docker: start Postgres, `pip install -r requirements.txt`, then
 ```bash
 export DATABASE_URL=postgresql://postgres:postgres@localhost:5432/booking
 python main.py migrate && python main.py seed
-uvicorn main:app --reload
+uvicorn main:app --reload --port 8001
 ```
 Migrations (`migrations/*.sql`) also run automatically on app start.
 In compose: `docker compose exec app python main.py seed`.
@@ -21,7 +21,7 @@ React + Vite in `frontend/`: pick room and date, see the day grid (15-min cells,
 click a free cell to book (start, duration up to 4h, title), cancel your own bookings.
 ```bash
 cd frontend && npm install
-API_URL=http://localhost:8000 npm run dev   # http://localhost:5173, /api proxied to the backend
+API_URL=http://localhost:8001 npm run dev   # http://localhost:5173, /api proxied to the backend
 ```
 Set the user in the top bar (sent as `X-User-Id`). Times are shown/sent in Europe/Kyiv.
 
@@ -37,16 +37,16 @@ The test DB is truncated between tests — never point it at real data.
 ## Examples
 ```bash
 H='-H X-User-Id:alice -H Content-Type:application/json'
-curl $H -X POST localhost:8000/rooms -d '{"name":"Atlas","capacity":6}'
-curl $H -X POST localhost:8000/bookings -d '{"roomId":1,"title":"Sync","startAt":"2026-11-20T10:00:00+02:00","endAt":"2026-11-20T11:00:00+02:00"}'
+curl $H -X POST localhost:8001/rooms -d '{"name":"Atlas","capacity":6}'
+curl $H -X POST localhost:8001/bookings -d '{"roomId":1,"title":"Sync","startAt":"2026-11-20T10:00:00+02:00","endAt":"2026-11-20T11:00:00+02:00"}'
 # weekly x4, all-or-nothing
-curl $H -X POST localhost:8000/bookings -d '{"roomId":1,"title":"Weekly","startAt":"2026-11-23T10:00:00+02:00","endAt":"2026-11-23T11:00:00+02:00","repeat":{"weekly":true,"count":4}}'
+curl $H -X POST localhost:8001/bookings -d '{"roomId":1,"title":"Weekly","startAt":"2026-11-23T10:00:00+02:00","endAt":"2026-11-23T11:00:00+02:00","repeat":{"weekly":true,"count":4}}'
 # idempotent retry
-curl $H -H 'Idempotency-Key: abc' -X POST localhost:8000/bookings -d '{...}'
-curl $H 'localhost:8000/bookings?roomId=1&mine=true&page=1&limit=10'
-curl $H localhost:8000/rooms/1/availability?date=2026-11-20
-curl $H 'localhost:8000/rooms/1/stats?from=2026-11-16&to=2026-11-22'
-curl $H -X DELETE localhost:8000/bookings/1
+curl $H -H 'Idempotency-Key: abc' -X POST localhost:8001/bookings -d '{...}'
+curl $H 'localhost:8001/bookings?roomId=1&mine=true&page=1&limit=10'
+curl $H localhost:8001/rooms/1/availability?date=2026-11-20
+curl $H 'localhost:8001/rooms/1/stats?from=2026-11-16&to=2026-11-22'
+curl $H -X DELETE localhost:8001/bookings/1
 ```
 
 ## Design
