@@ -24,8 +24,8 @@ export default function App() {
 
   useEffect(() => localStorage.setItem("userId", user), [user]);
 
+  // Does not clear the error itself: a follow-up reload must not wipe a fresh error message.
   const run = useCallback(async (fn) => {
-    setError("");
     try { return await fn(); } catch (e) { setError(e.message); }
   }, []);
 
@@ -48,7 +48,7 @@ export default function App() {
     });
   }, [roomId, date, user, run]);
 
-  useEffect(() => { setForm(null); load(); }, [load]);
+  useEffect(() => { setForm(null); setError(""); load(); }, [load]);
 
   // map slot -> booking that covers it
   const slotMap = useMemo(() => {
@@ -73,7 +73,13 @@ export default function App() {
     return n;
   };
 
+  const isPast = (slot) => {
+    const today = todayKyiv();
+    return date < today || (date === today && slot < kyivHHMM(new Date().toISOString()));
+  };
+
   const pick = (slot) => {
+    setError("");
     const free = maxFree(slot);
     setForm({ start: slot, duration: Math.min(60, free, 240), title: "" });
   };
@@ -81,6 +87,7 @@ export default function App() {
   const submit = async (e) => {
     e.preventDefault();
     setBusy(true);
+    setError("");
     await run(async () => {
       await api("/bookings", {
         user, method: "POST",
@@ -151,7 +158,12 @@ export default function App() {
                       )}
                     </div>
                   ) : (
-                    <button className="cell free-btn" onClick={() => pick(slot)} aria-label={`Вільно ${slot}`} />
+                    <button
+                      className="cell free-btn"
+                      disabled={isPast(slot)}
+                      onClick={() => pick(slot)}
+                      aria-label={`Вільно ${slot}`}
+                    />
                   )}
                 </div>
               );
@@ -164,7 +176,7 @@ export default function App() {
               <p>{room?.name}, {date}</p>
               <label>Початок
                 <select value={form.start} onChange={(e) => setForm({ ...form, start: e.target.value, duration: 15 })}>
-                  {SLOTS.filter((s) => !slotMap[s]).map((s) => <option key={s}>{s}</option>)}
+                  {SLOTS.filter((s) => !slotMap[s] && !isPast(s)).map((s) => <option key={s}>{s}</option>)}
                 </select>
               </label>
               <label>Тривалість

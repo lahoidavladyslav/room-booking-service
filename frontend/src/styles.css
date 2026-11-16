@@ -24,3 +24,4 @@ button:disabled { opacity: .5; cursor: default; }
 button.secondary { background: #e3e7ee; color: #223; }
 .error { background: #fde8e8; color: #8a1f1f; padding: 8px 12px; border-radius: 6px; margin-bottom: 12px; }
 .muted { color: #788; font-size: .85rem; margin: 0; }
+.free-btn:disabled { background: #eef0f3; cursor: not-allowed; }
