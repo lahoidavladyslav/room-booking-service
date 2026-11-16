@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && (ruff format -q . && ruff check . 2>&1 | tail -15) || true"
+          }
+        ]
+      }
+    ]
+  }
+}
